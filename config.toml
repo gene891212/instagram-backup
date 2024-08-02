@@ -1,0 +1,68 @@
+baseurl = "http://example.org/"
+languageCode = "zh"
+defaultContentLanguage = "zh"
+title = "謝明的那些事 - 紀錄那些點點滴滴"
+theme = "dream"
+
+# [services]
+# [services.disqus]
+# shortname = ""
+# [services.googleAnalytics]
+# ID = ""
+
+[params]
+lightTheme = "emerald"
+darkTheme = "forest"
+
+# backgroundImage = "/me/background.jpg"
+# backgroundImageDark = ""
+
+author = "謝明"
+description = "紀錄那些點點滴滴"
+avatar = "/me/avatar.jpg"
+headerTitle = "謝明的那些事"
+motto = "紀錄那些點點滴滴"
+
+# footerBottomText = ""
+
+# rss = true
+
+# utterancesRepo = ""
+
+# valine = true
+# LEANCLOUD_APP_ID = ""
+# LEANCLOUD_APP_KEY = ""
+# VALINE_LANGUAGE = ""
+
+# email = ""
+
+siteStartYear = 2016
+
+# favicon = "/favicon.ico"
+
+# Syntax highlighting
+# customSyntaxHighlighting = true
+
+# options
+stickyNav = true
+showSummaryCoverInPost = true
+# hasTwitterEmbed = true
+
+[params.advanced]
+customCSS = [
+    "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css",
+    "https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-video@0.8.0/dist/css/splide-extension-video.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lightgallery.min.css",
+    "css/custom.css",
+    "css/overwrite.css",
+]
+customJS = [
+    "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js",
+    "https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-video@0.8.0/dist/js/splide-extension-video.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/lightgallery.min.js",
+    "js/custom.js",
+]
+
+[params.experimental]
+jsDate = true
+jsDateFormat = "yyyy年MM月dd日"

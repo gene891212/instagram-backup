@@ -1,0 +1,12 @@
+.flip-container {
+    width: inherit;
+}
+
+.prose {
+    max-width: 800px;
+}
+
+.prose :where(hr):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+}

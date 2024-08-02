@@ -1,0 +1,167 @@
+<!-- <section id="main-slider" class="splide" aria-label="My Awesome Gallery">
+  <div class="splide__track">
+    <div class="splide__list">
+      {{ range $index, $slide := .Params.covers }}
+      <a href="{{ $slide }}" class="lightgallery splide__slide">
+        <img src="{{ $slide }}" alt="" />
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<ul id="thumbnails" class="thumbnails">
+  {{ range $index, $slide := .Params.covers }}
+  <li class="thumbnail">
+    <img src="{{ $slide }}" alt="">
+  </li>
+  {{ end }}
+</ul> -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var mainSplide = new Splide('#main-carousel', {
+      type: 'fade',
+      rewind: true,
+      pagination: false,
+      arrows: false,
+    })
+  
+    var thumbnailSplide = new Splide('#thumbnail-carousel', {
+      fixedWidth: 70,
+      fixedHeight: 70,
+      gap: 3.2,
+      rewind: true,
+      pagination: false,
+      focus: 'center',
+      isNavigation: true,
+    });
+  
+    mainSplide.sync(thumbnailSplide);
+    mainSplide.mount(window.splide.Extensions);
+    thumbnailSplide.mount();
+  
+  
+    lightGallery(document.getElementById('main-carousel'), {
+      selector: '.lightgallery'
+    });
+  });
+  </script>
+
+<section id="main-carousel" class="splide" aria-label="My Awesome Gallery">
+  <div class="splide__track">
+    <div class="splide__list">
+      {{ range $index, $slide := .Params.covers }}
+        {{ $ext := trim (path.Ext $slide) " " }}
+        {{ if eq $ext ".mp4" }}
+          <!-- <video class="splide__slide" id="video-{{ $index }}" autoplay muted loop>
+            <source src="{{ $slide }}" type="video/mp4">
+          </video> -->
+          <!-- <a id="video-{{ $index }}"
+             href="{{ $slide }}" 
+             class="lightgallery splide__slide" 
+             data-splide-html-video="{{ $slide }}">
+          </a> -->
+          <video class="splide__slide" autoplay muted loop>
+            <source src="{{ $slide }}" type="video/mp4">
+          </video>
+        {{ else }}
+          <div class="splide__slide">
+            <a href="{{ $slide }}" class="lightgallery">
+              <img src="{{ $slide }}" alt="" />
+            </a>
+          </div>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section id="thumbnail-carousel" class="splide"
+         aria-label="The carousel with thumbnails. Selecting a thumbnail will change the Beautiful Gallery carousel.">
+  <div class="splide__track">
+    <ul class="splide__list">
+      {{ range $index, $slide := .Params.covers }}
+        {{ $ext := trim (path.Ext $slide) " " }}
+        {{ if eq $ext ".mp4" }}
+          <li class="splide__slide" data-splide-html-video="{{ $slide }}">
+            <canvas id="canvas-{{ add $index 1 }}"></canvas>
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+              const video = document.getElementById('main-carousel-slide{{ printf "%02d" (add $index 1) }}');
+              const canvas = document.getElementById('canvas-{{ add $index 1 }}');
+              console.log(video, canvas);
+
+              function captureFrame() {
+                const containerWidth = canvas.clientWidth;
+                const containerHeight = canvas.clientHeight;
+                canvas.width = containerWidth;
+                canvas.height = containerHeight;
+
+                const videoAspect = video.videoWidth / video.videoHeight;
+                const containerAspect = containerWidth / containerHeight;
+
+                const ctx = canvas.getContext('2d');
+
+                let drawWidth, drawHeight, xOffset, yOffset;
+
+                if (containerAspect > videoAspect) {
+                  drawWidth = containerWidth;
+                  drawHeight = containerWidth / videoAspect;
+                  xOffset = 0;
+                  yOffset = (containerHeight - drawHeight) / 2;
+                } else {
+                  drawHeight = containerHeight;
+                  drawWidth = containerHeight * videoAspect;
+                  xOffset = (containerWidth - drawWidth) / 2;
+                  yOffset = 0;
+                }
+
+                ctx.drawImage(video, xOffset, yOffset, drawWidth, drawHeight);
+              }
+
+              function attemptCapture() {
+                if (video.readyState >= 2) {  // HAVE_CURRENT_DATA 或更高
+                  captureFrame();
+                } else {
+                  setTimeout(attemptCapture, 10);  // 10ms 后重试
+                }
+              }
+
+              video.addEventListener('loadedmetadata', () => {
+                console.log('loadedmetadata')
+                video.currentTime = 0.1;  // 设置到视频开始后的一小段时间
+              });
+
+              video.addEventListener('seeked', () => {
+                console.log('seeked')
+                attemptCapture();
+              });
+
+              // // Wait for the video to be loaded before attempting to capture
+              // video.addEventListener('loadedmetadata', function() {
+              //   console.log('loadedmetadata')
+              //   // Set the video to a specific time (e.g., 0.1 second) to ensure a frame is available
+              //   this.currentTime = 0.1;
+              //   // When the time updates, capture the frame
+              //   this.addEventListener('timeupdate', function() {
+              //     // Capture the frame
+              //     ctx.drawImage(video, xOffset, yOffset, drawWidth, drawHeight);
+
+              //     // Remove the event listener to prevent multiple captures
+              //     this.removeEventListener('timeupdate', arguments.callee);
+              //   });
+              // });
+            });
+            </script>
+          </li>
+        {{ else }}
+          <li class="splide__slide">
+            <img src="{{ $slide }}" alt="">
+          </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </div>
+</section>
+
